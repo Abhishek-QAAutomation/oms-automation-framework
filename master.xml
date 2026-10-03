@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Master Suite">
+
+    <listeners>
+        <listener class-name="com.vensysco.oms.utilities.ExtentReportManager"/>
+    </listeners>
+
+    <test name="Test">
+        <classes>
+            <class name="com.vensysco.oms.tests.TC001_LoginTest"/>
+        </classes>
+    </test>
+
+</suite>

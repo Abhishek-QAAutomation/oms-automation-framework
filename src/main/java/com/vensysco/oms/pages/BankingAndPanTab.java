@@ -51,7 +51,6 @@ public class BankingAndPanTab extends BasePage{
 	
 	public void selectBank(String bankName) throws InterruptedException {
 		selectBankDropdown.click();
-		Thread.sleep(5000);
 		bankSearchField.sendKeys(bankName);
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		WebElement bankOption = driver.findElement(By.xpath("//div[@role='option']//span[normalize-space()='" +bankName+ "']"));
@@ -63,12 +62,18 @@ public class BankingAndPanTab extends BasePage{
 		ifscCodeField.sendKeys(ifscCode);
 	}
 	
-	public void enterBranchName() {
+	public void enterBranchName(String branchName) {
+		
+		branchNameField.sendKeys(branchName);
 		
 	}
 	
 	public void enterAccountNumber(String accNumber) {
 		accountNumberField.sendKeys(accNumber);
+	}
+	
+	public void clickSaveAndContinue() {
+		saveAndContinueBtn.click();
 	}
 
 }
