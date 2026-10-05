@@ -16,7 +16,7 @@ public class DashboardPage extends BasePage{
 	private WebElement loginSuccessMsg;
 	
 	public boolean isLoginSuccessMsgDisplayed() {
-		boolean isLoginSuccessful = loginSuccessMsg.isDisplayed();
+		boolean isLoginSuccessful = waitForElementVisible(loginSuccessMsg).isDisplayed();
 		return isLoginSuccessful;
 	}
 

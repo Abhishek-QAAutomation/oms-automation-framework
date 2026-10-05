@@ -12,6 +12,9 @@ public class LoginPage extends BasePage{
 		super(driver);
 	}
 	
+	@FindBy(xpath="//h1[text()='Welcome back']")
+	private WebElement loginPageHeader;
+	
 	@FindBy(xpath="//input[@id='username']")
 	private WebElement emailField;
 	
@@ -22,13 +25,19 @@ public class LoginPage extends BasePage{
 	private WebElement loginBtn;
 	
 	@FindBy(xpath="//button[text()='Forgot password?']")
-	private WebElement forgotPasswordBtn;
+	private WebElement forgotPasswordLink;
 	
 	@FindBy(xpath="//button[text()='Sign up as Observer']")
-	private WebElement signUpBtn;
+	private WebElement signUpLink;
 	
 	@FindBy(xpath="//h5[normalize-space()='Authentication Successful']")
 	private WebElement loginSuccessMsg;
+	
+	public boolean isLoginPageOpen() {
+		boolean loginPageStatus = waitForElementVisible(loginPageHeader).isDisplayed();
+		return loginPageStatus;
+	}
+	
 	
 	public void enterEmail(String email) {
 		emailField.sendKeys(email);
@@ -42,12 +51,12 @@ public class LoginPage extends BasePage{
 		loginBtn.click();
 	}
 	
-	public void clickForgotPassword() {
-		forgotPasswordBtn.click();
+	public void clickForgotPasswordLink() {
+		forgotPasswordLink.click();
 	}
 	
-	public void clickSignUpBtn() {
-		signUpBtn.click();
+	public void clickSignUpLink() {
+		signUpLink.click();
 	}
 }
 	
