@@ -17,6 +17,9 @@ public class BankingAndPanTab extends BasePage{
 		super(driver);
 	}
 	
+	@FindBy(xpath="//h2[text()='Banking & PAN']")
+	private WebElement bankingAndPanPageHeader;
+	
 	@FindBy(xpath="//input[@placeholder='XXXX-XXXX-XXXX']")
 	private WebElement aadharNumberField;
 	
@@ -41,6 +44,11 @@ public class BankingAndPanTab extends BasePage{
 	@FindBy(xpath="//span[normalize-space()='Save & Continue']")
 	private WebElement saveAndContinueBtn;
 	
+	public boolean isBankingAndPanPageOpen() {
+		boolean bankingAndPanPageStatus = waitForElementVisible(bankingAndPanPageHeader).isDisplayed();
+		return bankingAndPanPageStatus;
+	}
+	
 	public void enterAadharNumber(String aadharNumber) {
 		aadharNumberField.sendKeys(aadharNumber);
 	}
@@ -49,13 +57,13 @@ public class BankingAndPanTab extends BasePage{
 		panNumberField.sendKeys(panNumber);
 	}
 	
-	public void selectBank(String bankName) throws InterruptedException {
-		selectBankDropdown.click();
-		bankSearchField.sendKeys(bankName);
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+	public void selectBank(String bankName) {
+		waitForElementToBeClickable(selectBankDropdown).click();
+		waitForElementVisible(bankSearchField).sendKeys(bankName);
+		
 		WebElement bankOption = driver.findElement(By.xpath("//div[@role='option']//span[normalize-space()='" +bankName+ "']"));
 		
-		wait.until(ExpectedConditions.elementToBeClickable(bankOption)).click();
+		waitForElementToBeClickable(bankOption).click();
 	}
 	
 	public void enterIFSCCode(String ifscCode) {

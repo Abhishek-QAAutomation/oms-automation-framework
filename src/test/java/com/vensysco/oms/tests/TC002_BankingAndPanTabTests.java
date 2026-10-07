@@ -12,7 +12,7 @@ import com.vensysco.oms.utilities.RandomDataGenerator;
 public class TC002_BankingAndPanTabTests extends BaseTest{
 	
 	@Test
-	public void verifySubmit() throws InterruptedException {
+	public void verifySubmit()  {
 		
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.enterEmail(properties.getProperty("email"));

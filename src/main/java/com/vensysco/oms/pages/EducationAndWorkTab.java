@@ -13,22 +13,31 @@ public class EducationAndWorkTab extends BasePage{
 		super(driver);
 	}
 	
+	@FindBy(xpath="//h2[text()='Education & Work']")
+	private WebElement educationAndWorkTabHeader;
+	
 	@FindBy(xpath="//div[text()='Section details saved successfully.']")
 	private WebElement 	sectionCompletionMsg;
 	
-	@FindBy(xpath="//span[normalize-space()='SELECT QUALIFICATION']")
+	@FindBy(xpath="(//div[@role='combobox'])[1]")
 	private WebElement highestQualificationDropdown;
 	
 	@FindBy(xpath="//input[@placeholder='Enter Institute / University Name']")
 	private WebElement instituteNameField;
 	
-	@FindBy(xpath="//span[normalize-space()='Working']")
-	private WebElement workingRadioBtn;
+	@FindBy(xpath="//label[.//input[@name='employmentStatus' and @value='working']]")
+	private WebElement workingRadioBtnLabel;
 	
-	@FindBy(xpath="//span[normalize-space()='Retired']")
-	private WebElement retiredRadioBtn;
+	@FindBy(xpath="//input[@name='employmentStatus' and @value='working']")
+	private WebElement workingRadioBtnInput;
 	
-	@FindBy(xpath="//span[normalize-space()='SELECT TYPE']")
+	@FindBy(xpath="//label[.//input[@name='employmentStatus' and @value='retired']]")
+	private WebElement retiredRadioBtnLabel;
+	
+	@FindBy(xpath="//input[@name='employmentStatus' and @value='retired']")
+	private WebElement retiredRadioBtnInput;
+	
+	@FindBy(xpath="(//div[@role='combobox'])[2]")
 	private WebElement organizationTypeDropdown;
 	
 	@FindBy(xpath="//input[@placeholder='Enter organisation name']")
@@ -46,7 +55,14 @@ public class EducationAndWorkTab extends BasePage{
 	@FindBy(xpath="//span[normalize-space()='Add Organisation']")
 	private WebElement addOrganizationBtn;
 	
+	@FindBy(xpath="//button[contains(normalize-space(), 'Save & Continue')]")
+	private WebElement saveAndContinueBtn;
 	
+
+	public boolean isEducationAndWorkTabOpen() {
+		boolean educationAndWorkTabStaus = waitForElementVisible(educationAndWorkTabHeader).isDisplayed();
+		return educationAndWorkTabStaus;
+	}
 	
 	public boolean isSectionCompleted() {
 		boolean isSectionCompletedMsgDisplayed = sectionCompletionMsg.isDisplayed();
@@ -54,31 +70,49 @@ public class EducationAndWorkTab extends BasePage{
 	}
 	
 	public void selectQualification(String education) throws InterruptedException {
-		highestQualificationDropdown.click();
-		Thread.sleep(5000);
-		WebElement option= driver.findElement(By.xpath("//div[@role='option']//span[normalize-space()='" + education +"']"));
-		Thread.sleep(5000);
-		option.click();
+		Thread.sleep(10000);
+		waitForElementToBeClickable(highestQualificationDropdown).click();
+		By qualificationOption= By.xpath("//div[@role='option']//span[normalize-space()='" + education +"']");
+		waitForElementToBeClickable(qualificationOption).click();
 	}
 	
-	public void enterIstituteName(String instituteName) {
+	public String getSelectedQualification() {
+		String actualSelectedOption = highestQualificationDropdown.getText().trim();
+		return actualSelectedOption;
+	}
+	
+	public void enterInstituteName(String instituteName) {
 		instituteNameField.sendKeys(instituteName);
 	}
 	
 	public void clickRetiredRadioBtn() {
-		retiredRadioBtn.click();
+		waitForElementToBeClickable(retiredRadioBtnLabel).click();
+	}
+	
+	public boolean getRetiredRadioBtnSelectionStatus() {
+		boolean retiredRadioBtnStatus = waitForElementSelect(retiredRadioBtnInput);
+		return retiredRadioBtnStatus;
 	}
 	
 	public void clickWorkingRadioBtn() {
-		workingRadioBtn.click();
+		waitForElementToBeClickable(workingRadioBtnLabel).click();
+	}
+	
+	public boolean getWorkingRadioBtnSelectionStatus() {
+		boolean workingRadioBtnStatus = waitForElementSelect(workingRadioBtnInput);
+		return workingRadioBtnStatus;
 	}
 	
 	public void selectOrganizationType(String orgType) throws InterruptedException {
-		organizationTypeDropdown.click();
-		Thread.sleep(5000);
-		WebElement option = driver.findElement(By.xpath("//div[@role='option']//span[normalize-space()='" + orgType +"']"));
-		Thread.sleep(5000);
-		option.click();
+		Thread.sleep(10000);
+		waitForElementToBeClickable(organizationTypeDropdown).click();
+		By organizationTypeOption = By.xpath("//div[@role='option' and normalize-space(.)='" + orgType + "']");
+		waitForElementToBeClickable(organizationTypeOption).click();
+	}
+	
+	public String getSelectedOrganizationType() {
+		String actualSelectedOrganizationType= organizationTypeDropdown.getText().trim();
+		return actualSelectedOrganizationType;
 	}
 	
 	public void enterCurrentOrganization(String currentOrganizationName) {
@@ -90,14 +124,21 @@ public class EducationAndWorkTab extends BasePage{
 	}
 	
 	public void selectWorkingPeriodFrom(String month, String year) throws InterruptedException {
-		workingPeriodFromMonthDropdown.click();
-		Thread.sleep(5000);
-		WebElement monthOption = driver.findElement(By.xpath("//div[@role='option']//span[normalize-space()='" + month +"']"));
-		monthOption.click();
-		Thread.sleep(5000);
-		workingPeriodFromYearDropdown.click();
-		WebElement yearDropdown = driver.findElement(By.xpath("//div[@role='option']//span[normalize-space()='" + year +"']"));
-		yearDropdown.click();
+		waitForElementToBeClickable(workingPeriodFromMonthDropdown).click();
+		By monthOption = By.xpath("//div[@role='option']//span[normalize-space()='" + month +"']");
+		waitForElementToBeClickable(monthOption).click();
+		waitForElementToBeClickable(workingPeriodFromYearDropdown).click();
+		By yearDropdownOption = By.xpath("//div[@role='option']//span[normalize-space()='" + year +"']");
+		waitForElementToBeClickable(yearDropdownOption).click();
+	}
+	
+	public String getSelectedWorkingPeriodFrom() {
+		String actualSelectedWorkingPeriodFrom = (workingPeriodFromMonthDropdown.getText() + workingPeriodFromYearDropdown.getText()).trim();
+		return actualSelectedWorkingPeriodFrom;
+	}
+	
+	public void clickOnSaveAndContinueBtn() {
+		waitForElementToBeClickable(saveAndContinueBtn).click();
 	}
 
 }

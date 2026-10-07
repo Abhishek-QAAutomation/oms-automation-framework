@@ -4,7 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.vensysco.oms.base.BaseTest;
-import com.vensysco.oms.pages.DashboardPage;
+import com.vensysco.oms.pages.ProfileDashboardPage;
 import com.vensysco.oms.pages.EligibilityCriteriaPage;
 import com.vensysco.oms.pages.ForgotPasswordPage;
 import com.vensysco.oms.pages.LoginPage;
@@ -17,7 +17,7 @@ public class TC001_LoginTest extends BaseTest {
 		loginPage.enterEmail(properties.getProperty("email"));
 		loginPage.enterPassword(properties.getProperty("password"));
 		loginPage.clickLoginBtn();
-		DashboardPage dashboardPage = new DashboardPage(driver);
+		ProfileDashboardPage dashboardPage = new ProfileDashboardPage(driver);
 		Assert.assertTrue(dashboardPage.isLoginSuccessMsgDisplayed());
 	}
 	
